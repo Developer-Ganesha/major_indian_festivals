@@ -1,0 +1,334 @@
+{
+    "diwali": {
+        "id": "diwali",
+        "name": "Diwali",
+        "description": "Festival of Lights (aka Deepavali)",
+        "image": "images/diwali1.jpg",
+        "sections": [
+            {
+                "title": "Timing",
+                "content": "Season: Fall (Autumn). Month: October or November. Dates: Varies according to the Hindu lunar calendar.",
+                "image": "images/diwali2.jpg"
+            },
+            {
+                "title": "Regions",
+                "content": "Celebrated widely across all of India.",
+                "image": "images/diwali3.jpg"
+            },
+            {
+                "title": "Significance",
+                "content": "Diwali symbolizes the victory of light over darkness and good over evil. Associated primarily with the story of Lord Rama's return to Ayodhya after 14 years of exile and his victory over the demon king Ravana. To celebrate his return, the people lit oil lamps (diyas), hence the tradition of lighting lamps.",
+                "image": "images/diwali7.jpg"
+            },
+            {
+                "title": "Celebration Customs",
+                "content": "Lighting lamps and Candles: Homes and streets decorated with clay lamps, candles, and electric lights. Fireworks and Crackers: Symbolizing joy and celebrating the triumph of good. Rangoli Creation: Colorful decorative patterns made on floors, using colored powders, rice, flowers, or sand. Exchanging Gifts: Friends and family exchange sweets, dry fruits, and other gifts symbolizing goodwill.",
+                "image": "images/diwali_cele.jpg"
+            },
+            {
+                "title": "Traditional Attire",
+                "content": "Women wear sarees. Men wear traditional kurtas & Pyjamas.",
+                "image": "images/traditional.jpg"
+            }
+        ],
+        "quiz": [
+            {
+                "question": "What does Diwali symbolize?",
+                "options": [
+                    "Victory of light over darkness",
+                    "Beginning of spring",
+                    "Harvest festival",
+                    "New Year celebration"
+                ],
+                "correct": "Victory of light over darkness"
+            },
+            {
+                "question": "In which season is Diwali celebrated?",
+                "options": [
+                    "Spring",
+                    "Summer",
+                    "Fall",
+                    "Winter"
+                ],
+                "correct": "Fall"
+            },
+            {
+                "question": "Identify the significance of lighting diyas.",
+                "options": [
+                    "Victory of light over darkness",
+                    "To welcome guests",
+                    "To decorate homes",
+                    "To ward off evil"
+                ],
+                "correct": "Victory of light over darkness"
+            },
+            {
+                "question": "Diwali celebrates the victory of good over evil.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": "True"
+            },
+            {
+                "question": "Diwali is celebrated in Pan India.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": "True"
+            },
+            {
+                "question": "What should men wear during Diwali?",
+                "options": [
+                    "Western clothes",
+                    "Kurta Pyjama",
+                    "Casual clothes",
+                    "Sports wear"
+                ],
+                "correct": "Kurta Pyjama"
+            },
+            {
+                "question": "What do women traditionally wear during Diwali?",
+                "options": [
+                    "Western clothes",
+                    "Saree",
+                    "Casual clothes",
+                    "Sports wear"
+                ],
+                "correct": "Saree"
+            }
+        ]
+    },
+    "harvest_festival": {
+        "id": "harvest_festival",
+        "name": "Harvest Festival",
+        "description": "Makar Sankranti / Uttarayan / Pongal / Magh Bihu / Lohri",
+        "image": "images/harvest.jpg",
+        "sections": [
+            {
+                "title": "Other Names & Regions",
+                "content": "Uttarayan (aka Makar Sankranti): North, West & Central India. Pongal: South India. Magh Bihu (aka Bhogali Bihu): East India. Lohri: North India.",
+                "image": "images/download1.jpg"
+            },
+            {
+                "title": "Timing",
+                "content": "Season: Winter. Month: January (Winter Solstice). Dates: January 13-15 annually. 13 Jan: Lohri - Evening bonfires in North. 14 Jan: Makar Sankranti/Pongal - Kite flying in West, cooking sweet rice in South. 15 Jan: Magh Bihu/Makar Sankranti/Pongal - Cultural performances & games in East, Day 2 of kite flying in West, cattle celebration in South.",
+                "image": "images/images123456.jpg"
+            },
+            {
+                "title": "Significance",
+                "content": "Celebrates harvest season and gratitude to nature. Marks the sun's movement northward, signifying warmer and longer days ahead.",
+                "image": "images/images12345.jpg"
+            },
+            {
+                "title": "Celebration Customs",
+                "content": "Makar Sankranti/Uttarayan: Kite flying competitions. Pongal: Special preparation of sweet rice dish ('Pongal'), decorated cows honored and worshipped. Magh Bihu: Traditional games like buffalo fights and cultural performances. Lohri: Evening bonfires with singing and dancing.",
+                "image": "images/pongal.jpg"
+            }
+        ],
+        "quiz": [
+            {
+                "question": "What is the main purpose of harvest festivals?",
+                "options": [
+                    "Celebrate the end of harvest season",
+                    "Welcome spring",
+                    "Honor ancestors",
+                    "Celebrate new year"
+                ],
+                "correct": "Celebrate the end of harvest season"
+            },
+            {
+                "question": "Which state celebrates Pongal?",
+                "options": [
+                    "Punjab",
+                    "Tamil Nadu",
+                    "Assam",
+                    "Kerala"
+                ],
+                "correct": "Tamil Nadu"
+            },
+            {
+                "question": "What is traditionally offered to the Sun God during harvest festivals?",
+                "options": [
+                    "Rice",
+                    "Flowers",
+                    "Fruits",
+                    "All of the above"
+                ],
+                "correct": "All of the above"
+            },
+            {
+                "question": "Which harvest festival is celebrated in Punjab?",
+                "options": [
+                    "Pongal",
+                    "Lohri",
+                    "Magh Bihu",
+                    "Onam"
+                ],
+                "correct": "Lohri"
+            },
+            {
+                "question": "What is the main dish prepared during Pongal?",
+                "options": [
+                    "Sweet Pongal",
+                    "Khichdi",
+                    "Biryani",
+                    "Curry"
+                ],
+                "correct": "Sweet Pongal"
+            },
+            {
+                "question": "Which month do most harvest festivals occur in?",
+                "options": [
+                    "January",
+                    "March",
+                    "June",
+                    "September"
+                ],
+                "correct": "January"
+            },
+            {
+                "question": "What is the significance of bonfires in Lohri?",
+                "options": [
+                    "To keep warm",
+                    "To ward off evil spirits",
+                    "To celebrate the Sun God",
+                    "To cook food"
+                ],
+                "correct": "To celebrate the Sun God"
+            },
+            {
+                "question": "Which harvest festival is celebrated in Assam?",
+                "options": [
+                    "Pongal",
+                    "Lohri",
+                    "Magh Bihu",
+                    "Onam"
+                ],
+                "correct": "Magh Bihu"
+            },
+            {
+                "question": "What is the traditional dance performed during harvest festivals?",
+                "options": [
+                    "Bhangra",
+                    "Bihu",
+                    "Garba",
+                    "All of the above"
+                ],
+                "correct": "All of the above"
+            },
+            {
+                "question": "Which crop is primarily associated with harvest festivals?",
+                "options": [
+                    "Rice",
+                    "Wheat",
+                    "Sugarcane",
+                    "All of the above"
+                ],
+                "correct": "All of the above"
+            }
+        ]
+    },
+    "holi": {
+        "id": "holi",
+        "name": "Holi",
+        "description": "The Festival of Colors (aka Dhuleti)",
+        "image": "images/holi2.jpg",
+        "sections": [
+            {
+                "title": "Timing",
+                "content": "Season: Spring. Month: March. Dates: Varies according to Hindu lunar calendar.",
+                "image": "images/holi1.jpg"
+            },
+            {
+                "title": "Regions",
+                "content": "Celebrated across whole India - North, West, South, East, and Central regions.",
+                "image": "images/holi3.jpg"
+            },
+            {
+                "title": "Significance",
+                "content": "Celebrates the arrival of spring, symbolizing renewal and rebirth. Holi also signifies unity, friendship, and social harmony.",
+                "image": "images/holy6.jpg"
+            },
+            {
+                "title": "Celebration Customs",
+                "content": "Color Play: Throwing vibrant colored powders and water balloons. Music & Dance: Singing traditional folk songs, dancing, playing drums. Social Gatherings: Friends, family, and communities unite in celebration, overcoming social barriers.",
+                "image": "images/holi4.jpg"
+            },
+            {
+                "title": "Fun Fact",
+                "content": "This is the only festival where you have to wear old clothes due to staining from colors.",
+                "image": "images/holi7.jpg"
+            }
+        ],
+        "quiz": [
+            {
+                "question": "What does Holi celebrate?",
+                "options": [
+                    "Arrival of spring",
+                    "End of harvest",
+                    "New year",
+                    "Victory of good over evil"
+                ],
+                "correct": "Arrival of spring"
+            },
+            {
+                "question": "What is the attire for this festival?",
+                "options": [
+                    "Old clothes",
+                    "Traditional clothes",
+                    "New clothes",
+                    "Formal clothes"
+                ],
+                "correct": "Old clothes"
+            },
+            {
+                "question": "In which region is Holi celebrated?",
+                "options": [
+                    "Only North India",
+                    "Only South India",
+                    "Only East India",
+                    "Pan India"
+                ],
+                "correct": "Pan India"
+            },
+            {
+                "question": "Holi celebrates the victory of evil over good.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": "False"
+            },
+            {
+                "question": "People throw colors on each other in Holi.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": "True"
+            },
+            {
+                "question": "Holi is celebrated in which month?",
+                "options": [
+                    "January",
+                    "February",
+                    "March",
+                    "April"
+                ],
+                "correct": "March"
+            },
+            {
+                "question": "What type of clothes should you wear for Holi?",
+                "options": [
+                    "New clothes",
+                    "Old clothes",
+                    "Traditional clothes",
+                    "Designer clothes"
+                ],
+                "correct": "Old clothes"
+            }
+        ]
+    }
+}

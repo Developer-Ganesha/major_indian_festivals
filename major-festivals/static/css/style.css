@@ -1,0 +1,67 @@
+/* Timer Styles */
+.timer-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.timer {
+    background-color: #343a40;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Card Styles */
+.card {
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Progress Bar Styles */
+.progress {
+    height: 25px;
+}
+
+.progress-bar {
+    transition: width 0.3s ease;
+}
+
+/* Quiz Styles */
+.form-check {
+    margin: 10px 0;
+}
+
+/* Result Styles */
+.text-success {
+    color: #28a745 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .timer-container {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .timer {
+        font-size: 1rem;
+        padding: 5px 10px;
+    }
+} 

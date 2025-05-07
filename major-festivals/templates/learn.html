@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1 class="text-center mb-4">{{ festival.name }}</h1>
+        
+        <!-- Progress Bar -->
+        <div class="progress mb-4">
+            <div class="progress-bar" role="progressbar" style="width: 0%;" id="progressBar"></div>
+        </div>
+
+        <!-- Content Sections -->
+        <div id="contentSections">
+            {% for section in festival.sections %}
+            <div class="content-section mb-4" style="display: none;">
+                <h2>{{ section.title }}</h2>
+                <p>{{ section.content }}</p>
+                {% if section.image %}
+                <img src="{{ url_for('static', filename=section.image) }}" class="img-fluid mb-3" alt="{{ section.title }}">
+                {% endif %}
+                {% if section.video %}
+                <div class="ratio ratio-16x9 mb-3">
+                    <iframe src="{{ section.video }}" allowfullscreen></iframe>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="d-flex justify-content-between mt-4">
+            <button class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
+            <button class="btn btn-primary" id="nextBtn">Next</button>
+        </div>
+
+        <!-- Quiz Button (shown only at the end) -->
+        <div class="text-center mt-4">
+            <a href="{{ url_for('quiz', festival_id=festival.id) }}" class="btn btn-success" id="quizBtn" style="display: none;">Take Quiz</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentSection = 0;
+    const sections = document.querySelectorAll('.content-section');
+    const totalSections = sections.length;
+    const progressBar = document.getElementById('progressBar');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const quizBtn = document.getElementById('quizBtn');
+
+    function updateProgress() {
+        const progress = ((currentSection + 1) / totalSections) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+
+    function showSection(index) {
+        sections.forEach(section => section.style.display = 'none');
+        sections[index].style.display = 'block';
+        prevBtn.disabled = index === 0;
+        nextBtn.style.display = index === totalSections - 1 ? 'none' : 'block';
+        quizBtn.style.display = index === totalSections - 1 ? 'block' : 'none';
+        updateProgress();
+    }
+
+    prevBtn.addEventListener('click', () => {
+        if (currentSection > 0) {
+            currentSection--;
+            showSection(currentSection);
+        }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (currentSection < totalSections - 1) {
+            currentSection++;
+            showSection(currentSection);
+        }
+    });
+
+    // Show first section initially
+    showSection(0);
+</script>
+{% endblock %} 

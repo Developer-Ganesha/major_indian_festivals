@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body">
+            <h2 class="text-center mb-4">🎨 Festival Spotlight: <strong>Holi (aka Dhuleti)</strong></h2>
+            <hr>
+
+            <h4>📅 Timing</h4>
+            <ul>
+                <li><strong>Season:</strong> Spring</li>
+                <li><strong>Month:</strong> March</li>
+                <li><strong>Approximate Dates:</strong> Varies based on Hindu lunar calendar</li>
+            </ul>
+
+            <hr>
+            <h4>📍 Regions Celebrated</h4>
+            <p>Celebrated across all of India, including:</p>
+            <ul class="row">
+                <li class="col-md-4">North</li>
+                <li class="col-md-4">West</li>
+                <li class="col-md-4">South</li>
+                <li class="col-md-4">East</li>
+                <li class="col-md-4">Central</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 🕉️ Significance -->
+<div class="card shadow-lg border-0 rounded-4 mb-4">
+  <div class="card-body">
+    <h4 class="mb-3">📖 Significance (Reason & Story)</h4>
+    <ul>
+      <li>Celebrate the arrival of spring, symbolizing renewal and rebirth.</li>
+      <li>Holi also signifies unity, friendship, and social harmony.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 🌸 Celebration Customs -->
+<div class="card shadow-lg border-0 rounded-4 mb-4">
+  <div class="card-body">
+    <h4 class="mb-3">🌸 Celebration Customs</h4>
+    <ul>
+      <li><strong>Color Play:</strong> Throwing vibrant colored powders and water balloons.</li>
+      <li><strong>Music & Dance:</strong> Singing traditional folk songs, dancing, playing drums.</li>
+      <li><strong>Social Gatherings:</strong> Friends, family, and communities unite in celebration, overcoming social barriers.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 👚 Fun Fact -->
+<div class="card shadow-sm border-start border-5 border-danger rounded-4 mb-5 ps-3 py-3 bg-light">
+  <h5>👚 Fun Fact</h5>
+  <p>This is the only festival where you have to wear old clothes due to staining from colors!</p>
+</div>
+<title>Holi Festival Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .color-canvas {
+            width: 100%;
+            height: 300px;
+            border: 2px solid black;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="text-center mb-5">Holi Festival Interactive Quiz</h1>
+
+        <!-- MCQ Section -->
+        <div id="mcq-section" class="mb-5">
+            <h4>Multiple Choice Questions:</h4>
+            <form id="mcq-form">
+                <div class="form-group">
+                    <label for="q1">What does Holi celebrate?</label>
+                    <select id="q1" class="form-control">
+                        <option value="A">Arrival of Spring</option>
+                        <option value="B">Harvest Festival</option>
+                        <option value="C">Victory of Good over Evil</option>
+                        <option value="D">Winter Solstice</option>
+                    </select>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="q2">What is the attire for this festival?</label>
+                    <select id="q2" class="form-control">
+                        <option value="A">Traditional Wedding Clothes</option>
+                        <option value="B">Old Clothes</option>
+                        <option value="C">New Clothes</option>
+                        <option value="D">Costume</option>
+                    </select>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="q3">In which region is Holi celebrated?</label>
+                    <select id="q3" class="form-control">
+                        <option value="A">North India</option>
+                        <option value="B">South India</option>
+                        <option value="C">Pan India</option>
+                        <option value="D">Internationally</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <!-- True/False Section -->
+        <div id="true-false-section" class="mb-5">
+            <h4>True/False Questions:</h4>
+            <form id="true-false-form">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="q1-tf" value="True" id="q1-tf">
+                    <label class="form-check-label" for="q1-tf">
+                        Holi celebrates the victory of evil over good. (False)
+                    </label>
+                </div>
+                <div class="form-check mt-3">
+                    <input class="form-check-input" type="radio" name="q2-tf" value="True" id="q2-tf">
+                    <label class="form-check-label" for="q2-tf">
+                        People throw colors on each other in Holi. (True)
+                    </label>
+                </div>
+            </form>
+        </div>
+
+        <!-- Fill in the Blank Section -->
+        <div id="fill-blank-section" class="mb-5">
+            <h4>Fill in the Blank:</h4>
+            <form id="fill-blank-form">
+                <div class="form-group">
+                    <label for="q1-fill">Holi is celebrated in ____________ month.</label>
+                    <select id="q1-fill" class="form-control">
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                    </select>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="q2-fill">Wear ____________ clothes in Holi.</label>
+                    <select id="q2-fill" class="form-control">
+                        <option value="old">Old</option>
+                        <option value="new">New</option>
+                        <option value="traditional">Traditional</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <!-- Virtual Color Play Section -->
+        <div id="color-play-section" class="mb-5">
+            <h4>Virtual Color Play</h4>
+            <p>Click to throw colors on the canvas:</p>
+            <button class="btn btn-primary" id="colorBtn">Throw Color</button>
+            <div id="color-canvas" class="color-canvas"></div>
+        </div>
+
+        <button class="btn btn-success mt-3" onclick="submitQuiz()">Submit Quiz</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Handle Color Throwing
+        const canvas = document.getElementById('color-canvas');
+        const colorBtn = document.getElementById('colorBtn');
+        colorBtn.addEventListener('click', () => {
+            const color = getRandomColor();
+            const colorDiv = document.createElement('div');
+            colorDiv.style.backgroundColor = color;
+            colorDiv.style.width = '50px';
+            colorDiv.style.height = '50px';
+            colorDiv.style.borderRadius = '50%';
+            colorDiv.style.position = 'absolute';
+            colorDiv.style.left = Math.random() * canvas.offsetWidth + 'px';
+            colorDiv.style.top = Math.random() * canvas.offsetHeight + 'px';
+            canvas.appendChild(colorDiv);
+        });
+
+        function getRandomColor() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#ffff00', '#00ffff'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Submit quiz function
+        function submitQuiz() {
+            // Collect answers (This could be sent to a server via AJAX in a real-world app)
+            const mcqAnswers = {
+                q1: document.getElementById('q1').value,
+                q2: document.getElementById('q2').value,
+                q3: document.getElementById('q3').value
+            };
+            const tfAnswers = {
+                q1: document.querySelector('input[name="q1-tf"]:checked')?.value,
+                q2: document.querySelector('input[name="q2-tf"]:checked')?.value
+            };
+            const fillAnswers = {
+                q1: document.getElementById('q1-fill').value,
+                q2: document.getElementById('q2-fill').value
+            };
+            console.log('MCQ Answers:', mcqAnswers);
+            console.log('True/False Answers:', tfAnswers);
+            console.log('Fill-in-the-Blank Answers:', fillAnswers);
+        }
+    </script>
+</body>
+{% endblock %}

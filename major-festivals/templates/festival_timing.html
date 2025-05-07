@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">📅 Timing</h2>
+    
+    <!-- Date Slider -->
+    <div class="date-slider-container">
+        <div class="slider-wrapper">
+            <input type="range" min="13" max="15" value="13" class="date-slider" id="dateSlider">
+            <div class="slider-labels d-flex justify-content-between">
+                <span>Jan 13</span>
+                <span>Jan 14</span>
+                <span>Jan 15</span>
+            </div>
+        </div>
+
+        <!-- Festival Information Cards -->
+        <div class="festival-info mt-4">
+            <!-- Jan 13 -->
+            <div class="card festival-card" data-date="13">
+                <div class="card-body">
+                    <h4>Lohri</h4>
+                    <p><strong>Region:</strong> North India</p>
+                    <p><strong>Celebration:</strong> Evening bonfires</p>
+                    <img src="{{ url_for('static', filename='images/lohri.jpg') }}" alt="Lohri celebration" class="img-fluid">
+                </div>
+            </div>
+
+            <!-- Jan 14 -->
+            <div class="card festival-card" data-date="14">
+                <div class="card-body">
+                    <h4>Makar Sankranti / Pongal</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>West India:</strong> Kite flying</p>
+                            <img src="{{ url_for('static', filename='images/kite_flying.jpg') }}" alt="Kite flying" class="img-fluid mb-3">
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>South India:</strong> Cooking sweet rice</p>
+                            <img src="{{ url_for('static', filename='images/sweet_rice.jpg') }}" alt="Sweet rice preparation" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jan 15 -->
+            <div class="card festival-card" data-date="15">
+                <div class="card-body">
+                    <h4>Magh Bihu/Makar Sankranti/Pongal</h4>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p><strong>East:</strong> Cultural performances & games</p>
+                            <img src="{{ url_for('static', filename='images/cultural_games.jpg') }}" alt="Cultural performances" class="img-fluid mb-3">
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>West:</strong> Day 2 of kite flying</p>
+                            <img src="{{ url_for('static', filename='images/kite_flying_2.jpg') }}" alt="Kite flying day 2" class="img-fluid mb-3">
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>South:</strong> Cattle celebration</p>
+                            <img src="{{ url_for('static', filename='images/cattle_celebration.jpg') }}" alt="Cattle celebration" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.date-slider-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.slider-wrapper {
+    margin-bottom: 2rem;
+}
+
+.date-slider {
+    width: 100%;
+    height: 15px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #ddd;
+    outline: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.date-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #007bff;
+    cursor: pointer;
+    border: 4px solid #fff;
+    box-shadow: -407px 0 0 400px #007bff;
+}
+
+.slider-labels {
+    margin-top: 0.5rem;
+    color: #666;
+}
+
+.festival-card {
+    display: none;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.festival-card.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.festival-card img {
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('dateSlider');
+    const cards = document.querySelectorAll('.festival-card');
+
+    function updateCards(value) {
+        cards.forEach(card => {
+            if (card.dataset.date === value) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        });
+    }
+
+    // Show initial card
+    updateCards(slider.value);
+
+    // Update on slider change
+    slider.addEventListener('input', (e) => {
+        updateCards(e.target.value);
+    });
+
+    // Allow clicking on date labels
+    document.querySelectorAll('.slider-labels span').forEach((label, index) => {
+        label.style.cursor = 'pointer';
+        label.addEventListener('click', () => {
+            slider.value = index + 13;
+            updateCards(slider.value);
+        });
+    });
+});
+</script>
+{% endblock %}

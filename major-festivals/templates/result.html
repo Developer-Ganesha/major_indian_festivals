@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">{{ festival.name }} Quiz Results</h1>
+    
+    <div class="card mb-4">
+        <div class="card-body text-center">
+            <h2>Your Score: {{ score }}/{{ festival.quiz|length }}</h2>
+            <div class="progress mt-3">
+                <div class="progress-bar" role="progressbar" style="width: {{ (score/festival.quiz|length)*100 }}%">
+                    {{ ((score/festival.quiz|length)*100)|round(1) }}%
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="mb-3">Review Your Answers</h3>
+    {% for question in festival.quiz %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Question {{ loop.index }}</h5>
+            <p class="card-text">{{ question.question }}</p>
+            <p class="card-text">
+                <strong>Your Answer:</strong> 
+                <span class="{% if answers[loop.index0] == question.correct %}text-success{% else %}text-danger{% endif %}">
+                    {{ answers[loop.index0] }}
+                </span>
+            </p>
+            {% if answers[loop.index0] != question.correct %}
+            <p class="card-text text-success">
+                <strong>Correct Answer:</strong> {{ question.correct }}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('home') }}" class="btn btn-primary">Back to Home</a>
+        <a href="{{ url_for('all_quiz') }}" class="btn btn-success ms-2">Take All Festival Quiz</a>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,66 @@
+{
+    "matching_activity": [
+        {
+            "term": "Holi",
+            "image": "images/holi1.jpg",
+            "description": "Festival of Colors"
+        },
+        {
+            "term": "Diwali",
+            "image": "images/diwali7.jpg",
+            "description": "Festival of Lights"
+        },
+        {
+            "term": "Harvest Festival",
+            "image": "images/harvest_kites.jpg",
+            "description": "Celebration of Harvest Season"
+        }
+    ],
+    "identify_festival": [
+        {
+            "media": "videos/diwali_fireworks.mp4",
+            "type": "video",
+            "answer": "Diwali",
+            "hint": "Festival known for lights and fireworks"
+        },
+        {
+            "media": "images/holi2.jpg",
+            "type": "image",
+            "answer": "Holi",
+            "hint": "Festival known for colors"
+        },
+        {
+            "media": "images/pongal.jpg",
+            "type": "image",
+            "answer": "Harvest Festival",
+            "hint": "Celebration of harvest and gratitude to nature"
+        }
+    ],
+    "drag_and_drop": {
+        "festivals": {
+            "Diwali": ["Diyas", "Rangoli", "Fireworks", "Sweets"],
+            "Holi": ["Colors", "Water balloons", "Old clothes", "Thandai"],
+            "Harvest Festival": ["Kites", "Sweet rice", "Bonfires", "Cultural performances"]
+        }
+    },
+    "emoji_stories": [
+        {
+            "story": "🪔👑🚶‍♂️❌🦹‍♂️",
+            "answer": "Victory",
+            "festival": "Diwali",
+            "hint": "Represents the victory of good over evil in Diwali"
+        },
+        {
+            "story": "🌈💦🎨👕",
+            "answer": "Colors",
+            "festival": "Holi",
+            "hint": "Represents the main activity during Holi"
+        },
+        {
+            "story": "🌾🪁🔥🎭",
+            "answer": "Harvest",
+            "festival": "Harvest Festival",
+            "hint": "Represents various celebrations during harvest festivals"
+        }
+    ]
+}

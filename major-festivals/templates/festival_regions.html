@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">🌾 Other Names & Regions</h2>
+    
+    <!-- Flashcard Container -->
+    <div class="flashcard-container position-relative" style="height: 400px;">
+        <!-- North Card -->
+        <div class="card flashcard position-absolute top-0 start-50 translate-middle-x" data-region="north">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>North India</h3>
+                    <i class="fas fa-sync"></i>
+                </div>
+                <div class="card-back">
+                    <h4>Festivals:</h4>
+                    <ul>
+                        <li>Uttarayan (Makar Sankranti)</li>
+                        <li>Lohri</li>
+                    </ul>
+                    <img src="{{ url_for('static', filename='images/harvest_north.jpg') }}" alt="North India Festivals" class="img-fluid">
+                </div>
+            </div>
+        </div>
+
+        <!-- South Card -->
+        <div class="card flashcard position-absolute bottom-0 start-50 translate-middle-x" data-region="south">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>South India</h3>
+                    <i class="fas fa-sync"></i>
+                </div>
+                <div class="card-back">
+                    <h4>Festival:</h4>
+                    <ul>
+                        <li>Pongal</li>
+                    </ul>
+                    <img src="{{ url_for('static', filename='images/harvest_south.jpg') }}" alt="South India Festivals" class="img-fluid">
+                </div>
+            </div>
+        </div>
+
+        <!-- East Card -->
+        <div class="card flashcard position-absolute top-50 start-0 translate-middle-y" data-region="east">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>East India</h3>
+                    <i class="fas fa-sync"></i>
+                </div>
+                <div class="card-back">
+                    <h4>Festival:</h4>
+                    <ul>
+                        <li>Magh Bihu (Bhogali Bihu)</li>
+                    </ul>
+                    <img src="{{ url_for('static', filename='images/harvest_east.jpg') }}" alt="East India Festivals" class="img-fluid">
+                </div>
+            </div>
+        </div>
+
+        <!-- West Card -->
+        <div class="card flashcard position-absolute top-50 end-0 translate-middle-y" data-region="west">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h3>West India</h3>
+                    <i class="fas fa-sync"></i>
+                </div>
+                <div class="card-back">
+                    <h4>Festival:</h4>
+                    <ul>
+                        <li>Uttarayan (Makar Sankranti)</li>
+                    </ul>
+                    <img src="{{ url_for('static', filename='images/harvest_west.jpg') }}" alt="West India Festivals" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.flashcard-container {
+    perspective: 1000px;
+}
+
+.flashcard {
+    width: 250px;
+    height: 300px;
+    cursor: pointer;
+    transition: transform 0.6s;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flashcard:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.card-front {
+    background-color: #f8f9fa;
+    border: 2px solid #dee2e6;
+}
+
+.card-back {
+    background-color: #fff;
+    border: 2px solid #dee2e6;
+    transform: rotateY(180deg);
+}
+
+.card-back img {
+    max-height: 150px;
+    object-fit: cover;
+    margin-top: 1rem;
+}
+
+.card-back ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.fas.fa-sync {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    color: #6c757d;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const flashcards = document.querySelectorAll('.flashcard');
+    flashcards.forEach(card => {
+        card.addEventListener('click', () => {
+            card.querySelector('.card-inner').style.transform = 
+                card.querySelector('.card-inner').style.transform === 'rotateY(180deg)' 
+                    ? 'rotateY(0deg)' 
+                    : 'rotateY(180deg)';
+        });
+    });
+});
+</script>
+{% endblock %}

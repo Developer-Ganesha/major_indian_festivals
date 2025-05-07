@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">✨ Celebration Customs</h2>
+    
+    <!-- Harvest Festival -->
+    <div class="festival-section mb-5">
+        <h3 class="text-center mb-4">Harvest Festival</h3>
+        <div class="row">
+            <!-- Makar Sankranti -->
+            <div class="col-md-6 mb-4">
+                <div class="custom-card">
+                    <div class="video-container">
+                        <video class="custom-video" controls>
+                            <source src="{{ url_for('static', filename='videos/kite_flying.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="custom-content">
+                        <h4>Makar Sankranti / Uttarayan</h4>
+                        <p>Kite flying competitions are a major highlight of the festival in Western India</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pongal -->
+            <div class="col-md-6 mb-4">
+                <div class="custom-card">
+                    <div class="video-container">
+                        <video class="custom-video" controls>
+                            <source src="{{ url_for('static', filename='videos/pongal.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="custom-content">
+                        <h4>Pongal</h4>
+                        <p>Special preparation of sweet rice dish ("Pongal") and decorated cows honored in South India</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Magh Bihu -->
+            <div class="col-md-6 mb-4">
+                <div class="custom-card">
+                    <div class="video-container">
+                        <video class="custom-video" controls>
+                            <source src="{{ url_for('static', filename='videos/bihu.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="custom-content">
+                        <h4>Magh Bihu</h4>
+                        <p>Traditional games and cultural performances in Eastern India</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lohri -->
+            <div class="col-md-6 mb-4">
+                <div class="custom-card">
+                    <div class="video-container">
+                        <video class="custom-video" controls>
+                            <source src="{{ url_for('static', filename='videos/lohri.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="custom-content">
+                        <h4>Lohri</h4>
+                        <p>Evening bonfires with singing and dancing in North India</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Holi -->
+    <div class="festival-section mb-5">
+        <h3 class="text-center mb-4">Holi</h3>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="custom-card">
+                    <div class="video-container">
+                        <video class="custom-video" controls>
+                            <source src="{{ url_for('static', filename='videos/holi_colors.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="custom-content">
+                        <h4>Color Play</h4>
+                        <p>Throwing vibrant colored powders and water balloons</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="custom-card">
+                    <div class="video-container">
+                        <video class="custom-video" controls>
+                            <source src="{{ url_for('static', filename='videos/holi_music.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="custom-content">
+                        <h4>Music & Dance</h4>
+                        <p>Singing traditional folk songs, dancing, playing drums</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="custom-card">
+                    <div class="video-container">
+                        <video class="custom-video" controls>
+                            <source src="{{ url_for('static', filename='videos/holi_gathering.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="custom-content">
+                        <h4>Social Gatherings</h4>
+                        <p>Communities unite in celebration, overcoming social barriers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diwali -->
+    <div class="festival-section">
+        <h3 class="text-center mb-4">Diwali</h3>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="custom-card">
+                    <div class="video-container">
+                        <video class="custom-video" controls>
+                            <source src="{{ url_for('static', filename='videos/diwali_lights.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="custom-content">
+                        <h4>Lighting & Decoration</h4>
+                        <p>Homes and streets decorated with clay lamps, candles, and electric lights</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="custom-card">
+                    <div class="video-container">
+                        <video class="custom-video" controls>
+                            <source src="{{ url_for('static', filename='videos/diwali_rangoli.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="custom-content">
+                        <h4>Rangoli Creation</h4>
+                        <p>Colorful decorative patterns made on floors using colored powders</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.festival-section {
+    padding: 2rem;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.custom-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: 100%;
+}
+
+.video-container {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.custom-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.custom-content {
+    padding: 1.5rem;
+}
+
+.custom-content h4 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.custom-content p {
+    color: #666;
+    margin-bottom: 0;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Optional: Add lazy loading for videos
+    const videos = document.querySelectorAll('video');
+    const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const video = entry.target;
+                video.load();
+                observer.unobserve(video);
+            }
+        });
+    }, options);
+
+    videos.forEach(video => {
+        observer.observe(video);
+    });
+});
+</script>
+{% endblock %}
