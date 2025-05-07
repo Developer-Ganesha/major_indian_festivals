@@ -2,6 +2,7 @@ services:
   - type: web
     name: major-indian-festivals
     env: python
+    rootDir: ./Major Indian festivals/major-festivals/app.py
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
     envVars:
