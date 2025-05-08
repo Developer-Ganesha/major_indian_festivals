@@ -2,43 +2,44 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h1 class="text-center mb-4">{{ festival.name }} Quiz Results</h1>
+    <h1 class="text-center display-4 mb-5">{{ festival.name }} Quiz Results</h1>
     
-    <div class="card mb-4">
-        <div class="card-body text-center">
-            <h2>Your Score: {{ score }}/{{ festival.quiz|length }}</h2>
-            <div class="progress mt-3">
-                <div class="progress-bar" role="progressbar" style="width: {{ (score/festival.quiz|length)*100 }}%">
-                    {{ ((score/festival.quiz|length)*100)|round(1) }}%
-                </div>
-            </div>
+    <div class="card shadow-sm mb-5">
+        <div class="card-body text-center py-4">
+            <h2 class="display-5 mb-3">Your Score: {{ score }} / {{ total_questions }}</h2>
+            <h3 class="display-6 mb-4">Percentage: {{ percentage|round(1) }}%</h3>
         </div>
     </div>
 
-    <h3 class="mb-3">Review Your Answers</h3>
-    {% for question in festival.quiz %}
-    <div class="card mb-3">
+    <h2 class="text-center h3 mb-4">Review Your Answers</h2>
+    {% for result in quiz_results %}
+    <div class="card shadow-sm mb-4">
         <div class="card-body">
-            <h5 class="card-title">Question {{ loop.index }}</h5>
-            <p class="card-text">{{ question.question }}</p>
-            <p class="card-text">
-                <strong>Your Answer:</strong> 
-                <span class="{% if answers[loop.index0] == question.correct %}text-success{% else %}text-danger{% endif %}">
-                    {{ answers[loop.index0] }}
+            <h5 class="mb-3">Question {{ loop.index }}</h5>
+            <p class="mb-4">{{ result.question }}</p>
+            
+            <div class="d-flex align-items-center mb-2">
+                <strong class="me-2">Your Answer:</strong>
+                <span class="badge {% if result.is_correct %}bg-success{% else %}bg-danger{% endif %} px-3 py-2">
+                    {{ result.user_answer }}
                 </span>
-            </p>
-            {% if answers[loop.index0] != question.correct %}
-            <p class="card-text text-success">
-                <strong>Correct Answer:</strong> {{ question.correct }}
-            </p>
+            </div>
+            
+            {% if not result.is_correct %}
+            <div class="d-flex align-items-center">
+                <strong class="me-2">Correct Answer:</strong>
+                <span class="text-success">{{ result.correct_answer }}</span>
+            </div>
             {% endif %}
         </div>
     </div>
     {% endfor %}
 
-    <div class="text-center mt-4">
-        <a href="{{ url_for('home') }}" class="btn btn-primary">Back to Home</a>
+    <div class="text-center mt-4 mb-5">
+        <a href="{{ url_for('quiz', festival_id=festival.id) }}" class="btn btn-primary">Try Again</a>
+        <a href="{{ url_for('learn', festival_id=festival.id) }}" class="btn btn-info ms-2">Learn More</a>
+        <a href="{{ url_for('home') }}" class="btn btn-secondary ms-2">Back to Home</a>
         <a href="{{ url_for('all_quiz') }}" class="btn btn-success ms-2">Take All Festival Quiz</a>
     </div>
 </div>
-{% endblock %} 
+{% endblock %}

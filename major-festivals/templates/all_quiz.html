@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-5" data-session='{% if session.get("selected_answers") %}{{ session.get("selected_answers")|tojson|safe }}{% else %}{}{% endif %}'>
+<div class="container mt-5">
     <h1 class="text-center mb-4">All Festivals Quiz</h1>
     
     <div id="quiz-container" style="display: none;">
@@ -11,41 +11,52 @@
             </div>
         </div>
         
-        <form id="quiz-form" method="POST" action="{{ url_for('all_quiz') }}" onsubmit="clearInterval(timerInterval);">
-            {% for question in questions %}
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">Question {{ loop.index }}</h5>
-                    <p class="card-text">{{ question.question }}</p>
-                    <div class="options-group">
-                        {% set outer_loop = loop %}
-                        {% for option in question.options %}
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="radio" 
-                                   name="question_{{ outer_loop.index0 }}" 
-                                   id="q{{ outer_loop.index0 }}_opt{{ loop.index0 }}" 
-                                   value="{{ option }}"
-                                   required
-                                   {% if session.get('selected_answers', {}).get(outer_loop.index0|string) == option %}checked{% endif %}>
-                            <label class="form-check-label" for="q{{ outer_loop.index0 }}_opt{{ loop.index0 }}">
-                                {{ option }}
-                            </label>
+        <form id="quiz-form" method="post" action="{{ url_for('all_quiz') }}" onsubmit="return validateForm();">
+            <div class="progress mb-4">
+                <div id="quiz-progress" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            {% for q in questions %}
+            {% set outer_loop = loop %}
+            <div class="question-card" id="question-{{ outer_loop.index0 }}" style="display: none;">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Question {{ outer_loop.index }} of {{ questions|length }}</h5>
+                        <p class="card-text">{{ q.question }}</p>
+                        <div class="options-group">
+                            {% for option in q.options %}
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" 
+                                       name="question_{{ outer_loop.index0 }}" 
+                                       id="q{{ outer_loop.index0 }}_opt{{ loop.index }}" 
+                                       value="{{ option }}"
+                                       required>
+                                <label class="form-check-label" for="q{{ outer_loop.index0 }}_opt{{ loop.index }}">
+                                    {{ option }}
+                                </label>
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
             </div>
             {% endfor %}
             
+            <div class="navigation-buttons text-center mb-4">
+                <button type="button" id="prev-btn" class="btn btn-secondary" style="display: none;">Previous</button>
+                <button type="button" id="next-btn" class="btn btn-primary">Next</button>
+                <button type="submit" id="submit-btn" class="btn btn-success" style="display: none;">Submit Quiz</button>
+            </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-lg">Submit Quiz</button>
+                <small class="text-muted">You can navigate between questions using Previous/Next buttons. Your answers will be saved.</small>
             </div>
         </form>
     </div>
-    
+
     <div id="start-container" class="text-center">
         <div class="card p-4">
             <h3 class="mb-4">Ready to start the All Festivals Quiz?</h3>
+            <p class="mb-3">Test your knowledge about all Indian festivals!</p>
             <p class="mb-3">You will have 10 minutes to complete the quiz once you start.</p>
             <button id="start-quiz" class="btn btn-success btn-lg">Start Quiz</button>
         </div>
@@ -56,92 +67,109 @@
 document.addEventListener('DOMContentLoaded', function() {
     const startButton = document.getElementById('start-quiz');
     const quizContainer = document.getElementById('quiz-container');
-    const timerDisplay = document.getElementById('timer');
     const quizForm = document.getElementById('quiz-form');
-    const radioInputs = document.querySelectorAll('input[type="radio"]');
+    const prevButton = document.getElementById('prev-btn');
+    const nextButton = document.getElementById('next-btn');
+    const timerDisplay = document.getElementById('timer');
+    const submitButton = document.getElementById('submit-btn');
+    const questionCards = document.querySelectorAll('.question-card');
+    const progressBar = document.getElementById('quiz-progress');
     
-    let timeLeft;
+    let currentQuestion = 0;
+    let timeLeft = 600; // 10 minutes in seconds
     let timerInterval;
-    let selectedAnswers = {};
     
-    function updateTimerDisplay() {
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    // Show initial question
+    questionCards[0].style.display = 'block';
+    
+    function showQuestion(index) {
+        // Hide all questions
+        questionCards.forEach(card => card.style.display = 'none');
+        
+        // Show current question
+        questionCards[index].style.display = 'block';
+        
+        // Update buttons
+        prevButton.style.display = index === 0 ? 'none' : 'inline-block';
+        nextButton.style.display = index === questionCards.length - 1 ? 'none' : 'inline-block';
+        submitButton.style.display = index === questionCards.length - 1 ? 'inline-block' : 'none';
+        
+        // Update progress
+        const progress = ((index + 1) / questionCards.length) * 100;
+        progressBar.style.width = progress + '%';
+        progressBar.setAttribute('aria-valuenow', progress);
+        
+        // Update current question
+        currentQuestion = index;
     }
     
-    startButton.addEventListener('click', function() {
-        startButton.style.display = 'none';
-        document.getElementById('start-container').style.display = 'none';
-        quizContainer.style.display = 'block';
-        
-        // Initialize timer
-        timeLeft = 600; // 10 minutes in seconds
-        updateTimerDisplay();
-        
-        // Start timer
-        timerInterval = setInterval(function() {
-            timeLeft--;
-            updateTimerDisplay();
+    function updateTimer() {
+        if (timeLeft >= 0) {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             
-            if (timeLeft <= 0) {
+            if (timeLeft === 0) {
                 clearInterval(timerInterval);
                 quizForm.submit();
             }
-        }, 1000);
-        
-        // Initialize timer on server
-        fetch('/api/timer', {
-            method: 'GET'
-        }).then(response => response.json())
-          .then(data => {
-              timeLeft = data.time_left;
-              updateTimerDisplay();
-          });
-    });
-    
-    // Save selected answers when changed
-    radioInputs.forEach(input => {
-        input.addEventListener('change', function() {
-            const questionIndex = this.name.split('_')[1];
-            const answer = this.value;
-            
-            // Store answer locally
-            selectedAnswers[questionIndex] = answer;
-            
-            // Send the selected answer to the server to store in session
-            fetch('/save_answer', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    question_index: questionIndex,
-                    answer: answer
-                })
-            }).then(response => response.json())
-              .then(data => {
-                  // Update radio button states based on server response
-                  if (data.status === 'success') {
-                      // Update the checked state of all radio buttons for this question
-                      document.querySelectorAll(`input[name="question_${questionIndex}"]`).forEach(radio => {
-                          radio.checked = (radio.value === answer);
-                      });
-                  }
-              });
-        });
-    });
-    
-    // Load saved answers if they exist in session
-    const sessionData = JSON.parse(document.querySelector('.container').dataset.session);
-    if (sessionData && typeof sessionData === 'object') {
-        Object.entries(sessionData).forEach(([questionIndex, answer]) => {
-            selectedAnswers[questionIndex] = answer;
-            document.querySelectorAll(`input[name="question_${questionIndex}"]`).forEach(radio => {
-                radio.checked = (radio.value === answer);
-            });
-        });
+            timeLeft--;
+        }
     }
+    
+    // Navigation event listeners
+    nextButton.onclick = function() {
+        const currentInputs = questionCards[currentQuestion].querySelectorAll('input[type="radio"]');
+        const isAnswered = Array.from(currentInputs).some(input => input.checked);
+        
+        if (!isAnswered) {
+            alert('Please select an answer before proceeding.');
+            return;
+        }
+        
+        if (currentQuestion < questionCards.length - 1) {
+            showQuestion(currentQuestion + 1);
+        }
+    };
+
+    prevButton.onclick = function() {
+        if (currentQuestion > 0) {
+            showQuestion(currentQuestion - 1);
+        }
+    };
+    
+
+    
+    function validateForm() {
+        const allQuestions = document.querySelectorAll('.question-card');
+        let allAnswered = true;
+        
+        allQuestions.forEach((question, index) => {
+            const inputs = question.querySelectorAll('input[type="radio"]');
+            const isAnswered = Array.from(inputs).some(input => input.checked);
+            if (!isAnswered) {
+                allAnswered = false;
+                showQuestion(index);
+            }
+        });
+        
+        if (!allAnswered) {
+            alert('Please answer all questions before submitting.');
+            return false;
+        }
+        
+        clearInterval(timerInterval);
+        return true;
+    }
+
+    startButton.addEventListener('click', function() {
+        startButton.parentElement.parentElement.style.display = 'none';
+        quizContainer.style.display = 'block';
+        showQuestion(0);
+        timeLeft = 600;
+        timerInterval = setInterval(updateTimer, 1000);
+        updateTimer();
+    });
 });
 </script>
 {% endblock %}

@@ -62,72 +62,149 @@ def quiz(festival_id):
     if not festival:
         return redirect(url_for('home'))
 
-    if request.method == 'POST':
-        selected_answers = request.form.to_dict()
-        session['selected_answers'] = selected_answers
-        return redirect(url_for('quiz_result', festival_id=festival_id))
+    # Get questions for this festival
+    questions = festival.get('quiz', [])
+    
+    if request.method == 'GET':
+        # Initialize timer when quiz starts
+        init_timer()
+        # Clear any previous answers
+        session.pop('selected_answers', None)
+        # Store current question index
+        session['current_question'] = 0
+        return render_template('quiz.html', 
+                             festival=festival, 
+                             questions=questions,
+                             current_question=0,
+                             total_questions=len(questions))
 
-    questions = festival.get('quiz')
-    return render_template('quiz.html', festival=festival, questions=questions)
+    if request.method == 'POST':
+        update_timer()
+        form_data = request.form.to_dict()
+        
+        # Process answers and calculate score
+        answers = []
+        score = 0
+        for i, question in enumerate(questions):
+            answer = form_data.get(f'answer_{i}', '')
+            answers.append(answer)
+            if answer == question['correct']:
+                score += 1
+        
+        # Store results in session
+        session[f'quiz_{festival_id}_score'] = score
+        session[f'quiz_{festival_id}_answers'] = answers
+        session[f'quiz_{festival_id}_questions'] = questions
+        session.pop('selected_answers', None)
+        session.pop('current_question', None)
+        
+        return redirect(url_for('result', festival_id=festival_id))
 
 @app.route('/result/<festival_id>')
 def result(festival_id):
     update_timer()
     festivals = load_festival_data()
     festival = festivals.get(festival_id)
+    if not festival:
+        return redirect(url_for('home'))
+
+    # Get quiz results from session
     score = session.get(f'quiz_{festival_id}_score', 0)
     answers = session.get(f'quiz_{festival_id}_answers', [])
-    return render_template('result.html', festival=festival, score=score, answers=answers)
+    questions = session.get(f'quiz_{festival_id}_questions', [])
+
+    # Calculate total questions and percentage
+    total_questions = len(questions)
+    percentage = (score / total_questions * 100) if total_questions > 0 else 0
+
+    # Create a list of question-answer pairs for display
+    quiz_results = []
+    for i, (question, answer) in enumerate(zip(questions, answers)):
+        quiz_results.append({
+            'question': question['question'],
+            'user_answer': answer,
+            'correct_answer': question['correct'],
+            'is_correct': answer == question['correct']
+        })
+
+    return render_template('result.html', 
+                         festival=festival, 
+                         score=score,
+                         total_questions=total_questions,
+                         percentage=percentage,
+                         quiz_results=quiz_results)
 
 @app.route('/quiz/all', methods=['GET', 'POST'])
 def all_quiz():
     festivals = load_festival_data()
-    
-    if request.method == 'GET':
-        # Initialize timer when quiz starts
-        init_timer()
-    
-    if request.method == 'POST':
-        update_timer()
-        all_questions = []
-        for fest in festivals.values():
-            all_questions.extend(fest['quiz'])
-            
-        form_data = request.form.to_dict()
-        answers = []
-        for i in range(len(all_questions)):
-            answer = form_data.get(f'question_{i}', '')
-            answers.append(answer)
-            
-        correct_answers = [q['correct'] for q in all_questions]
-        score = sum(1 for a, c in zip(answers, correct_answers) if a == c)
-        session['all_quiz_score'] = score
-        session['all_quiz_answers'] = answers
-        session['all_quiz_questions'] = all_questions
-        session.pop('selected_answers', None)  # Clear saved answers after submission
-        return redirect(url_for('all_result'))
     
     # Get questions from each festival and combine them
     all_questions = []
     for fest in festivals.values():
         all_questions.extend(fest['quiz'])
     
-    # Shuffle the questions to randomize the order
-    random.shuffle(all_questions)
+    if request.method == 'GET':
+        # Initialize timer when quiz starts
+        init_timer()
+        # Shuffle the questions to randomize the order
+        random.shuffle(all_questions)
+        # Store questions in session for later use
+        session['quiz_questions'] = all_questions
+        return render_template('all_quiz.html', questions=all_questions)
     
-    return render_template('all_quiz.html', questions=all_questions)
+    if request.method == 'POST':
+        update_timer()
+        form_data = request.form.to_dict()
+        
+        # Get questions from session
+        all_questions = session.get('quiz_questions', [])
+        if not all_questions:
+            return redirect(url_for('all_quiz'))
+        
+        # Process answers and calculate score
+        answers = []
+        score = 0
+        
+        # Collect answers and calculate score
+        for i in range(len(all_questions)):
+            answer = form_data.get(f'question_{i}', '')
+            answers.append(answer)
+            if answer == all_questions[i]['correct']:
+                score += 1
+        
+        # Store results in session
+        session['all_quiz_score'] = score
+        session['all_quiz_answers'] = answers
+        session['all_quiz_questions'] = all_questions
+        
+        # Clean up session
+        session.pop('quiz_questions', None)
+        session.pop('selected_answers', None)
+        
+        return redirect(url_for('all_result'))
 
 @app.route('/result/all')
 def all_result():
     update_timer()
+    
+    # Get quiz results from session
     questions = session.get('all_quiz_questions', [])
     score = session.get('all_quiz_score', 0)
     answers = session.get('all_quiz_answers', [])
+    
+    # If no quiz data in session, redirect to quiz
+    if not questions or not answers:
+        return redirect(url_for('all_quiz'))
+    
+    # Calculate total questions
+    total_questions = len(questions)
+    
+    # Render template with results
     return render_template('all_result.html', 
                          questions=questions,
                          score=score,
                          answers=answers,
-                         total_questions=len(questions))
+                         total_questions=total_questions)
 
 @app.route('/api/timer')
 def get_timer():
@@ -162,4 +239,4 @@ def festival_customs():
 if __name__ == '__main__':
     # Use environment variables for host and port
     port = int(os.getenv('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=False)
+    app.run(host='127.0.0.1', port=port, debug=True)
