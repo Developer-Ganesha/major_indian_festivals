@@ -2,211 +2,135 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="text-center mb-4">
-                <h1 class="display-4">{{ festival.name }} Festival Quiz</h1>
-                <p class="lead">Test your knowledge about {{ festival.name }}</p>
+    <h1 class="text-center mb-4">{{ festival.name }} Festival Quiz</h1>
+
+    <div id="quiz-container" style="display: none;">
+        <!-- Timer -->
+        <div class="timer-container text-center mb-4">
+            <div class="alert alert-dark py-2" style="background-color: #343a40; border: none;">
+                <h3 id="timer" class="mb-0 text-white" style="font-family: monospace; font-size: 2.5rem; letter-spacing: 2px;">10:00</h3>
             </div>
+        </div>
 
-            <div id="quiz-container" style="display: none;">
-                <!-- Timer -->
-                <div class="timer-container text-center mb-4">
-                    <div class="alert alert-dark py-2" style="background-color: #343a40; border: none;">
-                        <h3 id="timer" class="mb-0 text-white" style="font-family: monospace; font-size: 2.5rem;">10:00</h3>
-                    </div>
-                </div>
+        <!-- Progress Bar -->
+        <div class="progress mb-4">
+            <div id="quiz-progress" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
 
-                <!-- Progress Bar -->
-                <div class="progress mb-4" style="height: 10px;">
-                    <div id="quiz-progress" class="progress-bar bg-success" role="progressbar" style="width: 0%" 
-                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-
-                <!-- Question Counter -->
-                <div class="text-center mb-3">
-                    <span id="question-counter" class="badge bg-primary px-3 py-2" style="font-size: 1rem;"></span>
-                </div>
-
-                <form id="quiz-form" method="post" onsubmit="clearInterval(timerInterval);" 
-                      action="{{ url_for('quiz', festival_id=festival.id|string) }}">
-                    
-                    {% for q in questions %}
-                    {% set outer_loop = loop %}
-                    <div class="question-card" id="question-{{ outer_loop.index0 }}" style="display: none;">
-                        <div class="card shadow-sm">
-                            <div class="card-header bg-light">
-                                <h5 class="card-title mb-0">{{ q.question }}</h5>
+        <form id="quiz-form" method="post" action="{{ url_for('quiz', festival_id=festival.id|string) }}" onsubmit="clearInterval(timerInterval);">
+            {% for q in questions %}
+            {% set outer_loop = loop %}
+            <div class="question-card" id="question-{{ outer_loop.index0 }}" style="display: none;">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Question {{ outer_loop.index }} of {{ questions|length }}</h5>
+                        <p class="card-text">{{ q.question }}</p>
+                        <div class="options-group">
+                            {% for option in q.options %}
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" 
+                                       name="question_{{ outer_loop.index0 }}" 
+                                       id="q{{ outer_loop.index0 }}_opt{{ loop.index }}" 
+                                       value="{{ option }}"
+                                       required>
+                                <label class="form-check-label" for="q{{ outer_loop.index0 }}_opt{{ loop.index }}">
+                                    {{ option }}
+                                </label>
                             </div>
-                            <div class="card-body">
-                                <div class="options-group">
-                                    {% for option in q.options %}
-                                    <div class="form-check custom-option mb-3">
-                                        <input class="form-check-input" type="radio" 
-                                               name="question_{{ outer_loop.index0 }}" 
-                                               id="q{{ outer_loop.index0 }}_opt{{ loop.index }}" 
-                                               value="{{ option }}">
-                                        <label class="form-check-label" 
-                                               for="q{{ outer_loop.index0 }}_opt{{ loop.index }}">
-                                            {{ option }}
-                                        </label>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
-                    {% endfor %}
-
-                    <!-- Navigation Buttons -->
-                    <div class="navigation-buttons text-center mt-4 mb-4">
-                        <button type="button" id="prev-btn" class="btn btn-outline-primary btn-lg px-4" style="display: none;">
-                            <i class="fas fa-arrow-left"></i> Previous
-                        </button>
-                        <button type="button" id="next-btn" class="btn btn-primary btn-lg px-4">
-                            Next <i class="fas fa-arrow-right"></i>
-                        </button>
-                        <button type="submit" id="submit-btn" class="btn btn-success btn-lg px-4" style="display: none;">
-                            Submit Quiz <i class="fas fa-check"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Start Screen -->
-            <div id="start-container" class="text-center">
-                <div class="card shadow">
-                    <div class="card-body p-5">
-                        <h2 class="card-title mb-4">Welcome to the {{ festival.name }} Quiz!</h2>
-                        <div class="quiz-info mb-4">
-                            <div class="d-flex justify-content-center gap-4 mb-4">
-                                <div class="text-center">
-                                    <i class="fas fa-clock fa-2x mb-2"></i>
-                                    <p>10 Minutes</p>
-                                </div>
-                                <div class="text-center">
-                                    <i class="fas fa-question-circle fa-2x mb-2"></i>
-                                    <p>{{ questions|length }} Questions</p>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="lead mb-4">Test your knowledge about {{ festival.name }} and learn more about this amazing festival!</p>
-                        <button id="start-quiz" class="btn btn-success btn-lg px-5 py-3">
-                            <i class="fas fa-play me-2"></i> Start Quiz
-                        </button>
-                    </div>
                 </div>
             </div>
+            {% endfor %}
+
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons text-center mb-4">
+                <button type="button" id="prev-btn" class="btn btn-secondary" style="display: none;">Previous</button>
+                <button type="button" id="next-btn" class="btn btn-primary">Next</button>
+                <button type="submit" id="submit-btn" class="btn btn-success" style="display: none;">Submit Quiz</button>
+            </div>
+            <div class="text-center">
+                <small class="text-muted">Navigate with Previous/Next buttons. Answers are saved automatically.</small>
+            </div>
+        </form>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="start-container" class="text-center">
+        <div class="card p-4">
+            <h3 class="mb-4">Welcome to the {{ festival.name }} Quiz!</h3>
+            <p class="mb-3">Test your knowledge about {{ festival.name }}.</p>
+            <p class="mb-3">You’ll have 10 minutes to complete the quiz.</p>
+            <button id="start-quiz" class="btn btn-success btn-lg">Start Quiz</button>
         </div>
     </div>
 </div>
-
-<style>
-.custom-option .form-check-label {
-    border: 2px solid #dee2e6;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    display: inline-block;
-    width: 100%;
-    padding: 15px;
-    border-radius: 8px;
-}
-
-.custom-option .form-check-input {
-    /* Make radio buttons visible and clickable */
-    display: inline-block;
-    margin-right: 10px;
-}
-
-.custom-option .form-check-input:checked + .form-check-label {
-    border-color: #198754;
-    background-color: #f8f9fa;
-    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
-}
-
-.navigation-buttons button {
-    min-width: 140px;
-    margin: 0 10px;
-}
-
-.question-card {
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const startButton = document.getElementById('start-quiz');
     const quizContainer = document.getElementById('quiz-container');
-    const timerDisplay = document.getElementById('timer');
+    const quizForm = document.getElementById('quiz-form');
     const prevButton = document.getElementById('prev-btn');
     const nextButton = document.getElementById('next-btn');
+    const timerDisplay = document.getElementById('timer');
     const submitButton = document.getElementById('submit-btn');
     const questionCards = document.querySelectorAll('.question-card');
     const progressBar = document.getElementById('quiz-progress');
-    const questionCounter = document.getElementById('question-counter');
-    
+
     let currentQuestion = 0;
-    let timeLeft = 600; // 10 minutes in seconds
+    let timeLeft = 600; // 10 minutes
     let timerInterval;
-    
+
     function showQuestion(index) {
         questionCards.forEach((card, i) => {
             card.style.display = i === index ? 'block' : 'none';
         });
-        
-        prevButton.style.display = index > 0 ? 'inline-block' : 'none';
+
+        prevButton.style.display = index === 0 ? 'none' : 'inline-block';
         nextButton.style.display = index === questionCards.length - 1 ? 'none' : 'inline-block';
         submitButton.style.display = index === questionCards.length - 1 ? 'inline-block' : 'none';
-        
+
         const progress = ((index + 1) / questionCards.length) * 100;
         progressBar.style.width = `${progress}%`;
         progressBar.setAttribute('aria-valuenow', progress);
-        
-        questionCounter.textContent = `Question ${index + 1} of ${questionCards.length}`;
+        currentQuestion = index;
     }
-    
+
     function updateTimer() {
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            document.getElementById('quiz-form').submit();
-        }
-        timeLeft--;
-    }
-    
-    prevButton.addEventListener('click', () => {
-        if (currentQuestion > 0) {
-            currentQuestion--;
-            showQuestion(currentQuestion);
-        }
-    });
-    
-    nextButton.addEventListener('click', () => {
-        if (currentQuestion < questionCards.length - 1) {
-            const currentInputs = questionCards[currentQuestion].querySelectorAll('input[type="radio"]');
-            const isAnswered = Array.from(currentInputs).some(input => input.checked);
-            
-            if (!isAnswered) {
-                alert('Please select an answer before proceeding.');
-                return;
+        if (timeLeft >= 0) {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            if (timeLeft === 0) {
+                clearInterval(timerInterval);
+                quizForm.submit();
             }
-            
-            currentQuestion++;
-            showQuestion(currentQuestion);
+            timeLeft--;
         }
-    });
-    
-    startButton.addEventListener('click', function() {
-        startButton.parentElement.parentElement.parentElement.style.display = 'none';
+    }
+
+    nextButton.onclick = function () {
+        const currentInputs = questionCards[currentQuestion].querySelectorAll('input[type="radio"]');
+        const isAnswered = Array.from(currentInputs).some(input => input.checked);
+        if (!isAnswered) {
+            alert('Please select an answer before proceeding.');
+            return;
+        }
+        if (currentQuestion < questionCards.length - 1) {
+            showQuestion(currentQuestion + 1);
+        }
+    };
+
+    prevButton.onclick = function () {
+        if (currentQuestion > 0) {
+            showQuestion(currentQuestion - 1);
+        }
+    };
+
+    startButton.addEventListener('click', function () {
+        document.getElementById('start-container').style.display = 'none';
         quizContainer.style.display = 'block';
         showQuestion(0);
         timerInterval = setInterval(updateTimer, 1000);
